@@ -21,12 +21,12 @@ public abstract class NetworkBoundResource<ResultType, RequestType> {
                     .subscribeOn(Schedulers.io())
                     .doOnNext(apiResponse -> saveCallResult(processResponse(apiResponse)))
                     .flatMap(apiResponse -> loadFromDb().toObservable().map(Resource::success))
-                    .doOnError(t -> onFetchFailed())
+                    .doOnError(t -> loadFromDb().toObservable().map(Resource::success))
                     .onErrorResumeNext(t -> {
-                        return loadFromDb()
-                                .toObservable()
-                                .map(data -> Resource.error(t.getMessage(), data));
-
+//                        return loadFromDb()
+//                                .toObservable()
+//                                .map(data -> Resource.error(t.getMessage(), data));
+                        return loadFromDb().toObservable().map(Resource::success);
                     })
                     .observeOn(AndroidSchedulers.mainThread());
         } else {
@@ -52,7 +52,7 @@ public abstract class NetworkBoundResource<ResultType, RequestType> {
     protected RequestType processResponse(Resource<RequestType> response) {return response.data;}
 
     @WorkerThread
-    protected abstract void saveCallResult(@NonNull RequestType item);
+    protected abstract void saveCallResult(@NonNull RequestType data);
 
     @MainThread
     protected abstract boolean shouldFetch();

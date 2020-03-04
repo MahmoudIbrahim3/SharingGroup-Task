@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">SharingGroup-Task</string>
+    <string name="loading_label">Loading…</string>
+    <string name="connection_loss_label1">Oh! Sorry</string>
+    <string name="connection_loss_label2">May be there is a connection problem</string>
+    <string name="phone">Phone: %s</string>
 </resources>

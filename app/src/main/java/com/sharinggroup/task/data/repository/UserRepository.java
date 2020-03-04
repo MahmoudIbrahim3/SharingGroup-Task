@@ -7,6 +7,7 @@ import com.sharinggroup.task.data.local.entity.UserEntity;
 import com.sharinggroup.task.data.remote.api.UsersApiService;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import javax.inject.Singleton;
@@ -41,7 +42,7 @@ public class UserRepository {
             protected Flowable<List<UserEntity>> loadFromDb() {
                 List<UserEntity> userEntities = userDao.getUsers();
                 if(userEntities == null || userEntities.isEmpty())
-                    return Flowable.empty();
+                    return Flowable.just(Collections.emptyList());
                 return Flowable.just(userEntities);
             }
 
@@ -52,6 +53,32 @@ public class UserRepository {
                                 ? Resource.error("", new ArrayList<>())
                                 : Resource.success(usersApiResponse)));
             }
+
         }.getAsObservable();
     }
+
+//    public Observable<Resource<UserProfileEntity>> loadUserProfile() {
+//        return new NetworkBoundResource<UserProfileEntity, UserProfileEntity>(){
+//
+//            @Override
+//            protected void saveCallResult(UserProfileEntity data) {
+//
+//            }
+//
+//            @Override
+//            protected boolean shouldFetch() {
+//                return false;
+//            }
+//
+//            @Override
+//            protected Flowable<UserProfileEntity> loadFromDb() {
+//                return null;
+//            }
+//
+//            @Override
+//            protected Observable<Resource<UserProfileEntity>> createCall() {
+//                return null;
+//            }
+//        }.getAsObservable();
+//    }
 }

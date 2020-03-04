@@ -4,7 +4,10 @@ import android.view.LayoutInflater;
 import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.sharinggroup.task.R;
 import com.sharinggroup.task.data.local.entity.UserEntity;
+import com.sharinggroup.task.data.remote.model.Address;
 import com.sharinggroup.task.databinding.UsersListItemBinding;
 import java.util.ArrayList;
 import java.util.List;
@@ -28,7 +31,16 @@ public class UsersListAdapter extends RecyclerView.Adapter<UsersListAdapter.Cust
 
     @Override
     public void onBindViewHolder(@NonNull CustomViewHolder holder, int position) {
-        holder.itemBinding.message.setText(users.get(position).getName());
+        UserEntity user = users.get(position);
+
+        holder.itemBinding.tvUserName.setText(user.getName());
+
+        Address add = user.getAddress();
+        String address = add.getStreet() + ", " + add.getSuite() + ", " + add.getCity();
+        holder.itemBinding.tvAddress.setText(address);
+
+        holder.itemBinding.tvPhone.setText(holder.itemView.getContext().getString(R.string.phone,
+                users.get(position).getPhone()));
     }
 
     public void setItems(List<UserEntity> users) {

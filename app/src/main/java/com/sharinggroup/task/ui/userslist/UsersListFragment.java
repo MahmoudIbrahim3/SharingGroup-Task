@@ -13,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.sharinggroup.task.MainActivity;
 import com.sharinggroup.task.R;
 import com.sharinggroup.task.data.local.entity.UserEntity;
 import com.sharinggroup.task.databinding.UsersListFragmentBinding;
@@ -61,6 +62,8 @@ public class UsersListFragment extends Fragment {
     }
 
     private void initView() {
+        ((MainActivity) getActivity()).showLoading();
+        ((MainActivity) getActivity()).hideConnectionLoss();
         viewModel.loadUsers();
     }
 
@@ -68,19 +71,18 @@ public class UsersListFragment extends Fragment {
         viewModel = new ViewModelProvider(this, viewModelFactory).get(UsersListViewModel.class);
 
         viewModel.getUsersLivaData().observe(getViewLifecycleOwner(), resource -> {
-            if(resource.isLoading()) {
-
-            }
-            else if(resource.isSuccess()) {
+            if(resource.isSuccess() || (resource.data != null && !resource.data.isEmpty())) {
                 updateUI(resource.data);
             }
-            else{
-
+            else if(!resource.isSuccess()){
+                ((MainActivity) getActivity()).hideLoading();
+                ((MainActivity) getActivity()).showConnectionLoss();
             }
         });
     }
 
     private void updateUI(List<UserEntity> users) {
+        ((MainActivity) getActivity()).hideLoading();
         usersListAdapter.getItems().clear();
         usersListAdapter.setItems(users);
     }

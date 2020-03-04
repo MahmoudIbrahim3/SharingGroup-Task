@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/background"
+        android:id="@+id/clRootView"
+        android:visibility="gone"
+        xmlns:app="http://schemas.android.com/apk/res-auto">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/ivConnectionLossIcon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_signal_wifi_off_24px" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvLabel1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:textColor="@color/black"
+            android:textSize="@dimen/primary_text_size"
+            android:textStyle="bold"
+            android:layout_marginTop="@dimen/margin_16"
+            android:text="@string/connection_loss_label1"
+            app:layout_constraintStart_toStartOf="@id/ivConnectionLossIcon"
+            app:layout_constraintEnd_toEndOf="@id/ivConnectionLossIcon"
+            app:layout_constraintTop_toBottomOf="@id/ivConnectionLossIcon"/>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:textColor="@color/black"
+            android:textSize="@dimen/secondary_text_size"
+            android:text="@string/connection_loss_label2"
+            app:layout_constraintStart_toStartOf="@id/ivConnectionLossIcon"
+            app:layout_constraintEnd_toEndOf="@id/ivConnectionLossIcon"
+            app:layout_constraintTop_toBottomOf="@id/tvLabel1"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

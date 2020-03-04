@@ -12,9 +12,18 @@ import java.util.List;
 @Dao
 public interface UserDao {
 
+    // Users List
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     long[] insertUsers(List<UserEntity> users);
 
     @Query("SELECT * FROM `UserEntity`")
     List<UserEntity> getUsers();
+
+
+//    // User Profile
+//    @Insert(onConflict = OnConflictStrategy.REPLACE)
+//    long insertUserProfile(UserProfileEntity userProfileEntity);
+//
+//    @Query("SELECT * FROM `UserProfileEntity` WHERE id = :id")
+//    UserProfileEntity getUserProfileById(Integer id);
 }
