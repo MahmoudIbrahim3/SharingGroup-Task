@@ -1,0 +1,2 @@
+rootProject.name='SharingGroup-Task'
+include ':app'
