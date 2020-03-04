@@ -15,12 +15,12 @@ import javax.inject.Inject;
 
 public class UsersListViewModel extends ViewModel {
 
+    private UserRepository userRepository;
+
     @Inject
     public UsersListViewModel(UserDao userDao, UsersApiService usersApiService) {
         userRepository = new UserRepository(userDao, usersApiService);
     }
-
-    private UserRepository userRepository;
 
     private MutableLiveData<Resource<List<UserEntity>>> usersLivaData = new MutableLiveData<>();
 

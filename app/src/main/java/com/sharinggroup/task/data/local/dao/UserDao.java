@@ -20,10 +20,10 @@ public interface UserDao {
     List<UserEntity> getUsers();
 
 
-//    // User Profile
-//    @Insert(onConflict = OnConflictStrategy.REPLACE)
-//    long insertUserProfile(UserProfileEntity userProfileEntity);
-//
-//    @Query("SELECT * FROM `UserProfileEntity` WHERE id = :id")
-//    UserProfileEntity getUserProfileById(Integer id);
+    // User Profile
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    long insertUserProfile(UserEntity userProfileEntity);
+
+    @Query("SELECT * FROM `UserEntity` where id = :id")
+    UserEntity getUserProfileById(Integer id);
 }

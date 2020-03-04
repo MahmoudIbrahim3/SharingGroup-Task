@@ -1,10 +1,13 @@
 package com.sharinggroup.task.ui.userslist;
 
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 import androidx.annotation.NonNull;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.sharinggroup.task.AppConst;
 import com.sharinggroup.task.R;
 import com.sharinggroup.task.data.local.entity.UserEntity;
 import com.sharinggroup.task.data.remote.model.Address;
@@ -41,6 +44,18 @@ public class UsersListAdapter extends RecyclerView.Adapter<UsersListAdapter.Cust
 
         holder.itemBinding.tvPhone.setText(holder.itemView.getContext().getString(R.string.phone,
                 users.get(position).getPhone()));
+
+        holder.itemView.setTag(position);
+
+        holder.itemView.setOnClickListener(v -> {
+
+            int index = (int) v.getTag();
+            Bundle arg = new Bundle();
+            arg.putInt(AppConst.INTENT_USER_ID, users.get(index).getId());
+
+            Navigation.findNavController(v).navigate(
+                    R.id.action_mainFragment_to_userProfileFragment, arg);
+        });
     }
 
     public void setItems(List<UserEntity> users) {

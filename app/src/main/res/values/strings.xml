@@ -3,5 +3,10 @@
     <string name="loading_label">Loading…</string>
     <string name="connection_loss_label1">Oh! Sorry</string>
     <string name="connection_loss_label2">May be there is a connection problem</string>
+    <string name="username">Username: %s</string>
+    <string name="address">Address: %s</string>
+    <string name="email">Email: %s</string>
     <string name="phone">Phone: %s</string>
+    <string name="website">Website: %s</string>
+    <string name="company">Company: %s</string>
 </resources>

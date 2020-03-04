@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.sharinggroup.task.di.ViewModelFactory;
 import com.sharinggroup.task.di.ViewModelKey;
+import com.sharinggroup.task.ui.userprofile.UserProfileViewModel;
 import com.sharinggroup.task.ui.userslist.UsersListViewModel;
 
 import dagger.Binds;
@@ -21,4 +22,9 @@ public abstract class ViewModelModule {
     @IntoMap
     @ViewModelKey(UsersListViewModel.class)
     protected abstract ViewModel usersListViewModel(UsersListViewModel userListViewModel);
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(UserProfileViewModel.class)
+    protected abstract ViewModel userProfileViewModel(UserProfileViewModel userProfileViewModel);
 }

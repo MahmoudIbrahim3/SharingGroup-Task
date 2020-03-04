@@ -1,5 +1,6 @@
 package com.sharinggroup.task.di.module;
 
+import com.sharinggroup.task.ui.userprofile.UserProfileFragment;
 import com.sharinggroup.task.ui.userslist.UsersListFragment;
 
 import dagger.Module;
@@ -10,4 +11,7 @@ public abstract class FragmentModule {
 
     @ContributesAndroidInjector
     abstract UsersListFragment contributeUsersListFragment();
+
+    @ContributesAndroidInjector
+    abstract UserProfileFragment contributeUserProfileFragment();
 }

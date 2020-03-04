@@ -57,28 +57,32 @@ public class UserRepository {
         }.getAsObservable();
     }
 
-//    public Observable<Resource<UserProfileEntity>> loadUserProfile() {
-//        return new NetworkBoundResource<UserProfileEntity, UserProfileEntity>(){
-//
-//            @Override
-//            protected void saveCallResult(UserProfileEntity data) {
-//
-//            }
-//
-//            @Override
-//            protected boolean shouldFetch() {
-//                return false;
-//            }
-//
-//            @Override
-//            protected Flowable<UserProfileEntity> loadFromDb() {
-//                return null;
-//            }
-//
-//            @Override
-//            protected Observable<Resource<UserProfileEntity>> createCall() {
-//                return null;
-//            }
-//        }.getAsObservable();
-//    }
+    public Observable<Resource<UserEntity>> loadUserProfile(Integer userId) {
+        return new NetworkBoundResource<UserEntity, UserEntity>(){
+
+            @Override
+            protected void saveCallResult(UserEntity data) {
+                userDao.insertUserProfile(data);
+            }
+
+            @Override
+            protected boolean shouldFetch() {
+                return true;
+            }
+
+            @Override
+            protected Flowable<UserEntity> loadFromDb() {
+                UserEntity userEntity = userDao.getUserProfileById(userId);
+                return Flowable.just(userEntity);
+            }
+
+            @Override
+            protected Observable<Resource<UserEntity>> createCall() {
+                return usersApiService.fetchUserProfile(userId)
+                        .flatMap(usersApiResponse -> Observable.just(usersApiResponse == null
+                                ? Resource.error("", null)
+                                : Resource.success(usersApiResponse)));
+            }
+        }.getAsObservable();
+    }
 }

@@ -13,6 +13,6 @@ public interface UsersApiService {
     @GET("users/")
     Observable<List<UserEntity>> fetchUsers();
 
-//    @GET("users/{user_id}")
-//    Observable<UserProfileEntity> getUserProfile(@Path("user_id") Integer userId);
+    @GET("users/{user_id}")
+    Observable<UserEntity> fetchUserProfile(@Path("user_id") Integer userId);
 }
