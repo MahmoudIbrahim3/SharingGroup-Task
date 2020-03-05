@@ -7,7 +7,6 @@ import com.sharinggroup.task.data.local.entity.UserEntity;
 import com.sharinggroup.task.data.remote.model.UserProfileApiResponse;
 import com.sharinggroup.task.data.remote.api.UsersApiService;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 

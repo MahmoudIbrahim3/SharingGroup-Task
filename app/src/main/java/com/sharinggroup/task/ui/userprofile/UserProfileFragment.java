@@ -87,10 +87,13 @@ public class UserProfileFragment extends BaseFragment {
     }
 
     private void initView() {
+        mainActivity.showActionBar();
         mainActivity.setActionBarTitle(getString(R.string.profile));
+
         mainActivity.showLoading();
         mainActivity.hideConnectionLoss();
         mainActivity.showBackArrow();
+
         mainActivity.binding.toolbar.setNavigationOnClickListener(v -> {
             Navigation.findNavController(binding.getRoot()).popBackStack();
             mainActivity.hideBackArrow();

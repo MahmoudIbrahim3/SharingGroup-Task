@@ -9,8 +9,7 @@ public class CompanyTypeConverter {
 
     @TypeConverter
     public Company toCompany(String value) {
-        Company company = new Gson().fromJson(value, Company.class);
-        return company;
+        return new Gson().fromJson(value, Company.class);
     }
 
     @TypeConverter

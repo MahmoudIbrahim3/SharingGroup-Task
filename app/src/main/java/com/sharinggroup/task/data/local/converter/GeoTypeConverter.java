@@ -11,8 +11,7 @@ public class GeoTypeConverter {
 
     @TypeConverter
     public Geo toGeo(String value) {
-        Geo geo = new Gson().fromJson(value, Geo.class);
-        return geo;
+        return new Gson().fromJson(value, Geo.class);
     }
 
     @TypeConverter

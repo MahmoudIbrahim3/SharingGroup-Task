@@ -27,13 +27,6 @@ public class DbModule {
                 .allowMainThreadQueries().build();
     }
 
-
-    /*
-     * We need the UserDao module.
-     * For this, We need the AppDatabase object
-     * So we will define the providers for this here in this module.
-     * */
-
     @Provides
     @Singleton
     UserDao provideUserDao(@NonNull AppDatabase appDatabase) {

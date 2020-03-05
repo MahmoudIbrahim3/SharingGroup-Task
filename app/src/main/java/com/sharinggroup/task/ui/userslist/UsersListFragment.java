@@ -69,8 +69,10 @@ public class UsersListFragment extends BaseFragment {
     private void initView() {
         mainActivity.showActionBar();
         mainActivity.setActionBarTitle(getString(R.string.friends));
+
         mainActivity.showLoading();
         mainActivity.hideConnectionLoss();
+        mainActivity.hideBackArrow();
 
         viewModel.loadUsers();
     }
@@ -79,11 +81,8 @@ public class UsersListFragment extends BaseFragment {
         viewModel = new ViewModelProvider(this, viewModelFactory).get(UsersListViewModel.class);
 
         viewModel.getUsersLivaData().observe(getViewLifecycleOwner(), resource -> {
-            Log.d("TAG", "loading: " + resource.isLoading());
-            Log.d("TAG", "success: " + resource.isSuccess());
-            Log.d("TAG", "data: " + resource.data.size());
 
-            Boolean isTrue = resource.isLoading() || resource.isSuccess();
+            boolean isTrue = resource.isLoading() || resource.isSuccess();
 
             if(isTrue && !resource.data.isEmpty()) {
                 updateUI(resource.data);

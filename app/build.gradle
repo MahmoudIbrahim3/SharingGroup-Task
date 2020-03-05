@@ -30,6 +30,17 @@ android {
     }
 }
 
+ext {
+    dagger_version = '2.23.2'
+    navigation_version = '2.2.1'
+    lifecycle_version = '1.1.1'
+    room_version = '1.1.1'
+    rxandroid_version = '2.1.0'
+    retrofit2_version = '2.6.0'
+    logging_version = '4.0.0'
+    okhttp_version = '3.9.1'
+}
+
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
@@ -42,30 +53,34 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
 
     // Dagger2
-    implementation 'com.google.dagger:dagger-android-support:2.20'
-    annotationProcessor "com.google.dagger:dagger-compiler:2.20"
-    annotationProcessor 'com.google.dagger:dagger-android-processor:2.20'
+    implementation "com.google.dagger:dagger-android-support:$dagger_version"
+    annotationProcessor "com.google.dagger:dagger-compiler:$dagger_version"
+    annotationProcessor "com.google.dagger:dagger-android-processor:$dagger_version"
 
     // Navigation
-    implementation 'androidx.navigation:navigation-ui:2.2.1'
-    implementation 'androidx.navigation:navigation-fragment:2.2.1'
+    implementation "androidx.navigation:navigation-ui:$navigation_version"
+    implementation "androidx.navigation:navigation-fragment:$navigation_version"
 
     // LiveData & ViewModel
-    implementation 'android.arch.lifecycle:extensions:1.1.1'
+    implementation "android.arch.lifecycle:extensions:$lifecycle_version"
 
-    // Retrofit using RxJava2, Okhttp, logging interceptor, Gson
-    implementation 'com.squareup.retrofit2:retrofit:2.4.0'
-    implementation 'com.squareup.retrofit2:converter-gson:2.3.0'
-    implementation 'com.squareup.retrofit2:adapter-rxjava2:2.4.0'
-    implementation 'com.squareup.okhttp3:logging-interceptor:3.9.1'
-    testImplementation 'com.squareup.okhttp3:mockwebserver:3.9.1'
+    // Retrofit using RxJava2 and Gson
+    implementation "com.squareup.retrofit2:retrofit:$retrofit2_version"
+    implementation "com.squareup.retrofit2:converter-gson:$retrofit2_version"
+    implementation "com.squareup.retrofit2:adapter-rxjava2:$retrofit2_version"
+
+    // Logging Interceptor
+    implementation "com.squareup.okhttp3:logging-interceptor:$logging_version"
+
+    // Okhttp
+    testImplementation "com.squareup.okhttp3:mockwebserver:$okhttp_version"
 
     // RxAndroid
-    implementation 'io.reactivex.rxjava2:rxandroid:2.1.0'
+    implementation "io.reactivex.rxjava2:rxandroid:$rxandroid_version"
 
     // Room
-    implementation 'android.arch.persistence.room:runtime:1.1.1'
-    implementation 'android.arch.persistence.room:rxjava2:1.1.1'
-    annotationProcessor 'android.arch.persistence.room:compiler:1.1.1'
+    implementation "android.arch.persistence.room:runtime:$room_version"
+    implementation "android.arch.persistence.room:rxjava2:$room_version"
+    annotationProcessor "android.arch.persistence.room:compiler:$room_version"
 
 }

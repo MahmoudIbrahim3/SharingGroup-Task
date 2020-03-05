@@ -59,9 +59,8 @@ public class ApiModule {
         OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
         httpClient.cache(cache);
         httpClient.addInterceptor(logging);
-//        httpClient.addNetworkInterceptor(new RequestInterceptor());
-        httpClient.connectTimeout(30, TimeUnit.SECONDS);
-        httpClient.readTimeout(30, TimeUnit.SECONDS);
+        httpClient.connectTimeout(60, TimeUnit.SECONDS);
+        httpClient.readTimeout(60, TimeUnit.SECONDS);
         return httpClient.build();
     }
 
