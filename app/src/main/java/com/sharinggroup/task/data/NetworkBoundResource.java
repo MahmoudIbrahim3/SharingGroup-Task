@@ -21,18 +21,18 @@ public abstract class NetworkBoundResource<ResultType, RequestType> {
                     .subscribeOn(Schedulers.io())
                     .doOnNext(apiResponse -> saveCallResult(processResponse(apiResponse)))
                     .flatMap(apiResponse -> loadFromDb().toObservable().map(Resource::success))
-                    .doOnError(t -> loadFromDb().toObservable().map(Resource::success))
+                    .doOnError(t ->
+                            loadFromDb()
+                                    .toObservable()
+                                    .map(data -> Resource.error(t.getMessage(), data)))
                     .onErrorResumeNext(t -> {
-//                        return loadFromDb()
-//                                .toObservable()
-//                                .map(data -> Resource.error(t.getMessage(), data));
-                        return loadFromDb().toObservable().map(Resource::success);
+                        return loadFromDb()
+                                .toObservable()
+                                .map(data -> Resource.error(t.getMessage(), data));
                     })
                     .observeOn(AndroidSchedulers.mainThread());
         } else {
-            source = loadFromDb()
-                    .toObservable()
-                    .map(Resource::success);
+            source = loadFromDb().toObservable().map(Resource::success);
         }
 
         result = Observable.concat(

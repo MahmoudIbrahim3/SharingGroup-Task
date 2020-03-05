@@ -3,28 +3,29 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/mainFragment">
+    app:startDestination="@id/splashFragment">
 
     <fragment
         android:id="@+id/splashFragment"
         android:name="com.sharinggroup.task.ui.splash.SplashFragment"
-        android:label="splash_fragment"
+        android:label="SplashFragment"
         tools:layout="@layout/splash_fragment" >
 
         <action
             android:id="@+id/action_splashFragment_to_usersListFragment"
-            app:destination="@id/mainFragment"
+            app:destination="@id/usersListFragment"
             app:popUpTo="@id/splashFragment"
             app:popUpToInclusive="true" />
     </fragment>
 
     <fragment
-        android:id="@+id/mainFragment"
+        android:id="@+id/usersListFragment"
         android:name="com.sharinggroup.task.ui.userslist.UsersListFragment"
-        android:label="MainFragment" >
+        android:label="UsersListFragment" >
+
         <action
-            android:id="@+id/action_mainFragment_to_userProfileFragment"
-            app:destination="@id/userProfileFragment" />
+            android:id="@+id/action_usersListFragment_to_userProfileFragment"
+            app:destination="@id/userProfileFragment"/>
     </fragment>
 
     <fragment

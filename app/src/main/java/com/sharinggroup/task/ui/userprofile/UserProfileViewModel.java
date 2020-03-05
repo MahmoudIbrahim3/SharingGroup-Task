@@ -1,17 +1,17 @@
 package com.sharinggroup.task.ui.userprofile;
 
 import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.ViewModel;
 
 import com.sharinggroup.task.data.Resource;
 import com.sharinggroup.task.data.local.dao.UserDao;
-import com.sharinggroup.task.data.local.entity.UserEntity;
+import com.sharinggroup.task.data.remote.model.UserProfileApiResponse;
 import com.sharinggroup.task.data.remote.api.UsersApiService;
 import com.sharinggroup.task.data.repository.UserRepository;
+import com.sharinggroup.task.ui.base.BaseViewModel;
 
 import javax.inject.Inject;
 
-public class UserProfileViewModel extends ViewModel {
+public class UserProfileViewModel extends BaseViewModel {
 
     private UserRepository userRepository;
 
@@ -20,14 +20,15 @@ public class UserProfileViewModel extends ViewModel {
         userRepository = new UserRepository(userDao, usersApiService);
     }
 
-    private MutableLiveData<Resource<UserEntity>> userProfileLiveData = new MutableLiveData<>();
+    private MutableLiveData<Resource<UserProfileApiResponse>> userProfileLiveData = new MutableLiveData<>();
 
-    public MutableLiveData<Resource<UserEntity>> getUserProfileLiveData() {
+    public MutableLiveData<Resource<UserProfileApiResponse>> getUserProfileLiveData() {
         return userProfileLiveData;
     }
 
     public void loadUserProfile(Integer userId) {
         userRepository.loadUserProfile(userId).subscribe(
-                resource -> getUserProfileLiveData().postValue(resource));
+                resource -> getUserProfileLiveData().postValue(resource),
+                error -> getUserProfileLiveData().postValue(null));
     }
 }

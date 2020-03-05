@@ -3,7 +3,7 @@ package com.sharinggroup.task;
 import android.app.Activity;
 import android.app.Application;
 
-import com.sharinggroup.task.di.DaggerAppComponent;
+import com.sharinggroup.task.di.component.DaggerAppComponent;
 
 import javax.inject.Inject;
 

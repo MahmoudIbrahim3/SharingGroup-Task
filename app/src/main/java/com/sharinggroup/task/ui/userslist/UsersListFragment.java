@@ -9,6 +9,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,6 +19,7 @@ import com.sharinggroup.task.R;
 import com.sharinggroup.task.data.local.entity.UserEntity;
 import com.sharinggroup.task.databinding.UsersListFragmentBinding;
 import com.sharinggroup.task.di.ViewModelFactory;
+import com.sharinggroup.task.ui.base.BaseFragment;
 
 import java.util.List;
 
@@ -25,7 +27,7 @@ import javax.inject.Inject;
 
 import dagger.android.support.AndroidSupportInjection;
 
-public class UsersListFragment extends Fragment {
+public class UsersListFragment extends BaseFragment {
 
     @Inject
     ViewModelFactory viewModelFactory;
@@ -34,10 +36,13 @@ public class UsersListFragment extends Fragment {
     private UsersListFragmentBinding binding;
     private UsersListAdapter usersListAdapter;
 
+    private MainActivity mainActivity;
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         AndroidSupportInjection.inject(this);
+        mainActivity = (MainActivity) getActivity();
     }
 
     @Nullable
@@ -62,8 +67,11 @@ public class UsersListFragment extends Fragment {
     }
 
     private void initView() {
-        ((MainActivity) getActivity()).showLoading();
-        ((MainActivity) getActivity()).hideConnectionLoss();
+        mainActivity.showActionBar();
+        mainActivity.setActionBarTitle(getString(R.string.friends));
+        mainActivity.showLoading();
+        mainActivity.hideConnectionLoss();
+
         viewModel.loadUsers();
     }
 
@@ -71,18 +79,24 @@ public class UsersListFragment extends Fragment {
         viewModel = new ViewModelProvider(this, viewModelFactory).get(UsersListViewModel.class);
 
         viewModel.getUsersLivaData().observe(getViewLifecycleOwner(), resource -> {
-            if(resource.isSuccess() || (resource.data != null && !resource.data.isEmpty())) {
+            Log.d("TAG", "loading: " + resource.isLoading());
+            Log.d("TAG", "success: " + resource.isSuccess());
+            Log.d("TAG", "data: " + resource.data.size());
+
+            Boolean isTrue = resource.isLoading() || resource.isSuccess();
+
+            if(isTrue && !resource.data.isEmpty()) {
                 updateUI(resource.data);
             }
-            else if(!resource.isSuccess()){
-                ((MainActivity) getActivity()).hideLoading();
-                ((MainActivity) getActivity()).showConnectionLoss();
+            else if(!isTrue && resource.data.isEmpty()) {
+                mainActivity.hideLoading();
+                mainActivity.showConnectionLoss();
             }
         });
     }
 
     private void updateUI(List<UserEntity> users) {
-        ((MainActivity) getActivity()).hideLoading();
+        mainActivity.hideLoading();
         usersListAdapter.getItems().clear();
         usersListAdapter.setItems(users);
     }

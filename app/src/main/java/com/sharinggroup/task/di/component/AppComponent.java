@@ -1,4 +1,4 @@
-package com.sharinggroup.task.di;
+package com.sharinggroup.task.di.component;
 
 import android.app.Application;
 

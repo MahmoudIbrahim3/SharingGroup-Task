@@ -3,6 +3,7 @@ package com.sharinggroup.task;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
 
 import android.os.Bundle;
 import android.view.View;
@@ -20,7 +21,7 @@ public class MainActivity extends AppCompatActivity implements HasSupportFragmen
     @Inject
     DispatchingAndroidInjector<Fragment> dispatchingAndroidInjector;
 
-    private MainActivityBinding binding;
+    public MainActivityBinding binding;
 
     @Override
     public DispatchingAndroidInjector<Fragment> supportFragmentInjector() {
@@ -32,6 +33,22 @@ public class MainActivity extends AppCompatActivity implements HasSupportFragmen
         super.onCreate(savedInstanceState);
         AndroidInjection.inject(this);
         binding = DataBindingUtil.setContentView(this, R.layout.main_activity);
+
+        initView();
+    }
+
+    private void initView() {
+        setSupportActionBar(binding.toolbar);
+//        getSupportActionBar().setHomeButtonEnabled(false);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+    }
+
+    public void showBackArrow() {
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+    }
+
+    public void hideBackArrow() {
+        getSupportActionBar().setDisplayHomeAsUpEnabled(false);
     }
 
     public void showLoading() {
@@ -48,5 +65,17 @@ public class MainActivity extends AppCompatActivity implements HasSupportFragmen
 
     public void hideConnectionLoss(){
         binding.layoutConnectionLoss.clRootView.setVisibility(View.GONE);
+    }
+
+    public void showActionBar() {
+        binding.appBar.setVisibility(View.VISIBLE);
+    }
+
+    public void hideActionBar() {
+        binding.appBar.setVisibility(View.GONE);
+    }
+
+    public void setActionBarTitle(String title) {
+        getSupportActionBar().setTitle(title);
     }
 }

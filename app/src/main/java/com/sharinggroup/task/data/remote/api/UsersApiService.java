@@ -1,6 +1,7 @@
 package com.sharinggroup.task.data.remote.api;
 
 import com.sharinggroup.task.data.local.entity.UserEntity;
+import com.sharinggroup.task.data.remote.model.UserProfileApiResponse;
 
 import java.util.List;
 
@@ -14,5 +15,5 @@ public interface UsersApiService {
     Observable<List<UserEntity>> fetchUsers();
 
     @GET("users/{user_id}")
-    Observable<UserEntity> fetchUserProfile(@Path("user_id") Integer userId);
+    Observable<UserProfileApiResponse> fetchUserProfile(@Path("user_id") Integer userId);
 }

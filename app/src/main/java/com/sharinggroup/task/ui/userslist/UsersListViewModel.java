@@ -8,12 +8,13 @@ import com.sharinggroup.task.data.local.dao.UserDao;
 import com.sharinggroup.task.data.local.entity.UserEntity;
 import com.sharinggroup.task.data.remote.api.UsersApiService;
 import com.sharinggroup.task.data.repository.UserRepository;
+import com.sharinggroup.task.ui.base.BaseViewModel;
 
 import java.util.List;
 
 import javax.inject.Inject;
 
-public class UsersListViewModel extends ViewModel {
+public class UsersListViewModel extends BaseViewModel {
 
     private UserRepository userRepository;
 
@@ -29,6 +30,8 @@ public class UsersListViewModel extends ViewModel {
     }
 
     public void loadUsers() {
-        userRepository.loadUsers().subscribe(resource -> getUsersLivaData().postValue(resource));
+        userRepository.loadUsers().subscribe(
+                resource -> getUsersLivaData().postValue(resource),
+                error -> getUsersLivaData().postValue(null));
     }
 }

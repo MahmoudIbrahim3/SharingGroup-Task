@@ -4,6 +4,7 @@
     <dimen name="margin_8">8dp</dimen>
     <dimen name="margin_1">1dp</dimen>
 
+    <dimen name="large_text_size">48sp</dimen>
     <dimen name="primary_text_size">16sp</dimen>
     <dimen name="secondary_text_size">14sp</dimen>
 </resources>

@@ -54,7 +54,7 @@ public class UsersListAdapter extends RecyclerView.Adapter<UsersListAdapter.Cust
             arg.putInt(AppConst.INTENT_USER_ID, users.get(index).getId());
 
             Navigation.findNavController(v).navigate(
-                    R.id.action_mainFragment_to_userProfileFragment, arg);
+                    R.id.action_usersListFragment_to_userProfileFragment, arg);
         });
     }
 

@@ -1,7 +1,5 @@
 package com.sharinggroup.task.ui.splash;
 
-import androidx.lifecycle.ViewModelProviders;
-
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -9,19 +7,21 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.sharinggroup.task.MainActivity;
 import com.sharinggroup.task.R;
+import com.sharinggroup.task.ui.base.BaseFragment;
 
-public class SplashFragment extends Fragment {
-
-    private SplashViewModel mViewModel;
+public class SplashFragment extends BaseFragment {
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        ((MainActivity) getActivity()).hideActionBar();
     }
 
     @Override
@@ -31,17 +31,11 @@ public class SplashFragment extends Fragment {
     }
 
     @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        mViewModel = ViewModelProviders.of(this).get(SplashViewModel.class);
-        // TODO: Use the ViewModel
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
 
+        new Handler().postDelayed(() -> Navigation.findNavController(getView()).navigate(
+                R.id.action_splashFragment_to_usersListFragment), 2000);
     }
 
-    @Override
-    public void onStart() {
-        super.onStart();
-
-        Navigation.findNavController(getView()).navigate(R.id.action_splashFragment_to_usersListFragment);
-    }
 }

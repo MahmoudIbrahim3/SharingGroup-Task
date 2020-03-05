@@ -4,6 +4,7 @@ import com.sharinggroup.task.data.NetworkBoundResource;
 import com.sharinggroup.task.data.Resource;
 import com.sharinggroup.task.data.local.dao.UserDao;
 import com.sharinggroup.task.data.local.entity.UserEntity;
+import com.sharinggroup.task.data.remote.model.UserProfileApiResponse;
 import com.sharinggroup.task.data.remote.api.UsersApiService;
 
 import java.util.ArrayList;
@@ -14,6 +15,8 @@ import javax.inject.Singleton;
 
 import io.reactivex.Flowable;
 import io.reactivex.Observable;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.schedulers.Schedulers;
 
 @Singleton
 public class UserRepository {
@@ -50,39 +53,20 @@ public class UserRepository {
             protected Observable<Resource<List<UserEntity>>> createCall() {
                 return usersApiService.fetchUsers()
                         .flatMap(usersApiResponse -> Observable.just(usersApiResponse == null
-                                ? Resource.error("", new ArrayList<>())
+                                ? Resource.error("", null)
                                 : Resource.success(usersApiResponse)));
             }
 
         }.getAsObservable();
     }
 
-    public Observable<Resource<UserEntity>> loadUserProfile(Integer userId) {
-        return new NetworkBoundResource<UserEntity, UserEntity>(){
-
-            @Override
-            protected void saveCallResult(UserEntity data) {
-                userDao.insertUserProfile(data);
-            }
-
-            @Override
-            protected boolean shouldFetch() {
-                return true;
-            }
-
-            @Override
-            protected Flowable<UserEntity> loadFromDb() {
-                UserEntity userEntity = userDao.getUserProfileById(userId);
-                return Flowable.just(userEntity);
-            }
-
-            @Override
-            protected Observable<Resource<UserEntity>> createCall() {
-                return usersApiService.fetchUserProfile(userId)
-                        .flatMap(usersApiResponse -> Observable.just(usersApiResponse == null
-                                ? Resource.error("", null)
-                                : Resource.success(usersApiResponse)));
-            }
-        }.getAsObservable();
+    public Observable<Resource<UserProfileApiResponse>> loadUserProfile(Integer userId) {
+        return usersApiService.fetchUserProfile(userId)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .doOnError(t -> Resource.error("", null))
+                .flatMap(usersApiResponse -> Observable.just(usersApiResponse == null
+                        ? Resource.error("", null)
+                        : Resource.success(usersApiResponse)));
     }
 }

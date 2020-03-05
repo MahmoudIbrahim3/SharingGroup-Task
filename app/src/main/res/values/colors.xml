@@ -9,4 +9,7 @@
 
     <color name="background">#EFEBEB</color>
     <color name="divider">#EFEBEB</color>
+
+    <color name="colorBlueTransparent">#cc2196F3</color>
+
 </resources>
